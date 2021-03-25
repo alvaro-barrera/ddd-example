@@ -13,4 +13,8 @@ interface UserRepository
     public function save(UserEntity $user): void;
 
     public function update(UserId $id, UserEntity $user): void;
+
+    public function delete(UserId $id): void;
+
+    public function restore(UserId $id): void;
 }

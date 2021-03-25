@@ -24,14 +24,24 @@ final class EloquentUserRepository implements UserRepository
         $this->model->fill($user->to_array());
         $this->model->save();
     }
+
     public function update(UserId $id, UserEntity $user): void
     {
         $data = [
             'name' => $user->name()->value(),
             'email' => $user->email()->value(),
         ];
-//        $this->model->fill($user->to_array());
         $this->model->findOrFail($id->value())->update($data);
+    }
+
+    public function delete(UserId $id): void
+    {
+        $this->model->findOrFail($id->value())->delete();
+    }
+
+    public function restore(UserId $id): void
+    {
+        $this->model->withTrashed()->findOrFail($id->value())->restore();
     }
 
     public function search(UserId $userId): array
